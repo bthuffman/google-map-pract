@@ -1,39 +1,93 @@
-/// <reference types="@types/googlemaps" />
-import { Component, ViewChild } from '@angular/core';
-import {} from 'googlemaps';
-
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
-
-export class AppComponent {
-  // gmapElement is a reference to <div #gmap> inside app.component.html file. ViewChild directive creates a direct link between <div> element and a gmapElement member variable.
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
-
-  // Inside ngOnInit() life cycle hook, we shall create configuration object for GMap specifying default center, zoom level and map type. We shall pass this object to google.maps.Map constructor which shall return new Map object which we shall retain in member variable map for later access.
+export class AppComponent implements OnInit {
+  title: string = 'AGM project';
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  address: string;
+  private geoCoder;
+ 
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+ 
+ 
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) { }
+ 
+ 
   ngOnInit() {
-    var mapProp = {
-      center: new google.maps.LatLng(18.5793, 73.8143),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      this.setCurrentLocation();
+      this.geoCoder = new google.maps.Geocoder;
+ 
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+ 
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+ 
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
   }
-
-  setMapType(mapTypeId: string) {
-    this.map.setMapTypeId(mapTypeId)    
+ 
+  // Get Current Location Coordinates
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 8;
+        this.getAddress(this.latitude, this.longitude);
+      });
+    }
   }
-  
-  latitude:number;
-  longitude:number;
-
-  setCenter(e:any){
-    e.preventDefault();
-    this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
+ 
+ 
+  markerDragEnd($event: MouseEvent) {
+    console.log($event);
+    this.latitude = $event.coords.lat;
+    this.longitude = $event.coords.lng;
+    this.getAddress(this.latitude, this.longitude);
   }
-
+ 
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      console.log(results);
+      console.log(status);
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 12;
+          this.address = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+ 
+    });
+  }
+ 
 }

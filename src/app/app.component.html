@@ -1,17 +1,18 @@
-<main>
- <div #gmap style="width:100%;height:400px"></div>
- <div class="col-md-3 col-sm-12 col-xs-12">
-   <button (click)="setMapType('terrain')" class="btn btn-primary">Terrain</button>
-   <button (click)="setMapType('satellite')" class="btn btn-danger">Satellite</button>
-   <button (click)="setMapType('roadmap')" class="btn btn-warning">Road Map</button>
- </div>
- <form class="form-inline" #form="ngForm" (ngSubmit)="setCenter($event)" ac>
-   <div class="form-group">
-     <input type="text" class="form-control" name="latitude" [(ngModel)]="latitude" placeholder="Enter latitude" required>
-   </div>
-   <div class="form-group">
-     <input type="text" class="form-control" name="longitude" [(ngModel)]="longitude" placeholder="Enter longitude" required>
-   </div>
-   <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Go</button>
- </form>
-</main>
+<div class="container">
+ 
+  <h1>Angular Google Maps with Places Search Example</h1>
+ 
+  <div class="form-group">
+    <label>Enter address</label>
+    <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+  </div>
+ 
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+      (dragEnd)="markerDragEnd($event)"></agm-marker>
+  </agm-map>
+ 
+  <h5>Address: {{address}}</h5>
+  <div>Latitude: {{latitude}}</div>
+  <div>Longitude: {{longitude}}</div>
+</div>

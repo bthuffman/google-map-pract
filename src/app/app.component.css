@@ -1,12 +1,3 @@
 agm-map {
     height: 300px;
   }
-
-  a {
-    text-decoration: none;
-}
-
- #goGoogleButton {
-   text-align: right;
-   margin-top: 15px;
- }

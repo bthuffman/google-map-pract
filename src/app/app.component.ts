@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
- 
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 declare const myTest: any;
+declare const initMap: any;
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,16 @@ declare const myTest: any;
 })
 export class AppComponent implements OnInit {
 
-  onClick() {
-    myTest();
+
+
+  ngOnInit() {
+
+  // onClick() {
+  // myTest();
+    initMap();
   }
+  
+// }
+
+myTest();
 }

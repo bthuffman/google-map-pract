@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
-declare const myTest: any;
-declare const initMap: any;
+import { GoogleMapComponent } from '/google-map/google-map.component';
+// declare const myTest: any;
+// declare const initMap: any;
 
 @Component({
   selector: 'app-root',
@@ -9,8 +9,6 @@ declare const initMap: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
-
 
   ngOnInit() {
 
@@ -21,5 +19,5 @@ export class AppComponent implements OnInit {
   
 // }
 
-myTest();
+// myTest();
 }

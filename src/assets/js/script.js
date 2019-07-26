@@ -1,6 +1,6 @@
-function myTest() {
-  alert('Welcome to custom js');
-}
+// function myTest() {
+//   alert('Welcome to custom js');
+// }
 
 var map;
 var service;
@@ -53,9 +53,9 @@ function createMarker(place) {
   });
 }
 
-$(function() {
-  alert('Hello, custom js');
-});
+// $(function() {
+//   alert('Hello, custom js');
+// });
 
 // const googleMapsScript = document.createElement('script');
 // googleMapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDOkdAi3ANRGBDqXWXaaliEJlLLm1I9h0&callback=initMap';

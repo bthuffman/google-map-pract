@@ -33,13 +33,18 @@ export class AppComponent
   ngOnInit() {
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      //calls the setCurrentLocation function (see bellow)
       this.setCurrentLocation();
+      //assign geoCoder a new Geocoder object
       this.geoCoder = new google.maps.Geocoder;
- 
-      //
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      
+      //similar to that found in js example but for autocomplete
+      let autocomplete = new google.maps.places.Autocomplete
+      //targets the html element labeled 'search' 
+      (this.searchElementRef.nativeElement, {
         types: ["address"]
       });
+      console.log("This is the searchElementRef " + this.searchElementRef);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result

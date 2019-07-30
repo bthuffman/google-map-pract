@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./random-results.component.css']
 })
 export class RandomResultsComponent implements OnInit {
-
+  map;
+  service;
+  inforwindow;
+  
   constructor() { }
 
   ngOnInit() {

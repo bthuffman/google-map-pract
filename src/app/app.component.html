@@ -2,14 +2,14 @@
 <div><a routerLink="/random-results">Random Results</a></div>
 <router-outlet></router-outlet>
 <div class="container">
-  <!-- <h1>Angular Google Maps with Places Search Example</h1>
+  <h1>Angular Google Maps with Places Search Example</h1>
  
   <div class="form-group">
     <label>Enter address</label>
     <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" id="search" #search>
   </div>-->
- 
-  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" id="map">
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" class="map" #map>
     <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
       (dragEnd)="markerDragEnd($event)"></agm-marker>
   </agm-map>
@@ -20,7 +20,7 @@
   <div><a routerLink="/random-results">LOGO</a></div> -->
 
   <input id="pac-input" class="controls" type="text" placeholder="Search Box" #search>
-  <!-- <div id="map"></div> -->
+  <div class="map"></div>
 
 </div>
 

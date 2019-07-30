@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
 
 @Component({
   selector: 'app-random-results',
@@ -9,8 +10,11 @@ export class RandomResultsComponent implements OnInit {
   map;
   service;
   inforwindow;
-  
-  constructor() { }
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) { }
 
   ngOnInit() {
   }
